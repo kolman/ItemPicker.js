@@ -14,3 +14,8 @@
 .itemPicker-item.selected {
     background-color: cornflowerblue;
 }
+
+.itemPicker-item:active {
+    background-color: blue;
+}
+
