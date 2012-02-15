@@ -71,6 +71,15 @@
           ]);
       }
     });
+
+    $('#sampleWithImages .itemPicker-item').draggable({
+      connectToSortable: '#selected-files',
+      helper: 'clone'
+    });
+
+    $('#selected-files').itemPicker({
+      multiselect: true
+    }).sortable();
   </script>
 </body>
 </html>
