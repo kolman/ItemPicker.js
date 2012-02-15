@@ -33,13 +33,13 @@
 
   function initializeElement($picker) {
     $picker.css('overflow-y', 'auto');
-    $picker.change(function (e) {
-      var selected = $(e.target).is(":checked");
-      var $item = $(e.target).closest('.itemPicker-item');
-      if (selected)
-        $item.addClass("selected");
-      else
-        $item.removeClass("selected");
+    $picker.change(function () {
+      $picker.find('.itemPicker-item').each(function () {
+        if ($(this).find(':checked').length > 0)
+          $(this).addClass("selected");
+        else
+          $(this).removeClass("selected");
+      });
     });
   }
 
@@ -65,7 +65,8 @@
   function createItem($container, fieldName, multiselect, item) {
     var $label = $('<label></label>').appendTo($container);
 
-    $('<input type="checkbox"/>').attr('value', item.Value).attr('name', fieldName).appendTo($label);
+    var type = multiselect ? 'checkbox' : 'radio';
+    $('<input/>').attr('type', type).attr('value', item.Value).attr('name', fieldName).appendTo($label);
 
     if (item.Thumbnail) {
       $('<img/>').attr('src', item.Thumbnail).appendTo($label);

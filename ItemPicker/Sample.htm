@@ -7,10 +7,15 @@
       .sample-itempicker {
           border: 1px solid black;
       }
+      
+      .sample-itempicker.images .itemPicker-item {
+          /* float: left; */
+      }
   </style>
 </head>
 <body>
   <div fieldName="sample1" class="sample-itempicker simple" style="width:100px; height:100px"></div>
+  <div fieldName="sampleMultiple" class="sample-itempicker multiple" style="width:100px; height:100px"></div>
   <div fieldName="sampleWithImages" class="sample-itempicker images" style="width:500px; height:300px"></div>
   
   <script type="text/javascript" src="Scripts/jquery-1.7.1.js"></script>
@@ -32,7 +37,24 @@
       }
     });
 
+    $('.sample-itempicker.multiple').itemPicker({
+      getFieldName: function ($picker) { return $picker.attr('fieldName'); },
+      multiselect: true,
+      loadContent: function ($picker, callback) {
+        callback([
+            { Value: 'a', Label: 'img a' },
+            { Value: 'b', Label: 'img b' },
+            { Value: 'c', Label: 'img c' },
+            { Value: 'd', Label: 'img d' },
+            { Value: 'e', Label: 'img e' },
+            { Value: 'f', Label: 'img f' },
+            { Value: 'g', Label: 'img g' }
+          ]);
+      }
+    });
+
     $('.sample-itempicker.images').itemPicker({
+      multiselect: true,
       getFieldName: function ($picker) { return $picker.attr('fieldName'); },
       loadContent: function ($picker, callback) {
         callback([
