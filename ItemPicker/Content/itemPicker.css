@@ -1,0 +1,9 @@
+﻿.itemPicker-item label 
+{
+    display: block;
+    width: 100%;
+}
+
+.itemPicker-item:hover {
+    background-color: silver;
+}
