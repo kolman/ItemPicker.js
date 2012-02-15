@@ -11,19 +11,26 @@
       .sample-itempicker.images .itemPicker-item {
           /* float: left; */
       }
+      
+      /*
+      .images .itemPicker-item {
+          display: inline-block;
+      }
+      */
   </style>
 </head>
 <body>
-  <div fieldName="sample1" class="sample-itempicker simple" style="width:100px; height:100px"></div>
-  <div fieldName="sampleMultiple" class="sample-itempicker multiple" style="width:100px; height:100px"></div>
-  <div fieldName="sampleWithImages" class="sample-itempicker images" style="width:500px; height:300px"></div>
+  <div id="sample1" class="sample-itempicker simple" style="width:100px; height:100px"></div>
+  <div id="sampleMultiple" class="sample-itempicker multiple" style="width:100px; height:100px"></div>
+  <div id="sampleWithImages" class="sample-itempicker images" style="width:500px; height:300px"></div>
+  <div id="selected-files" class="sample-itempicker images" style="width:500px; height:300px; overflow-y: auto"></div>
   
   <script type="text/javascript" src="Scripts/jquery-1.7.1.js"></script>
   <script type="text/javascript" src="Scripts/jquery-ui-1.8.17.js"></script>
   <script type="text/javascript" src="Scripts/itemPicker.js"></script>
   <script type="text/javascript">
-    $('.sample-itempicker.simple').itemPicker({
-      getFieldName: function($picker) { return $picker.attr('fieldName'); },
+    $('#sample1').itemPicker({
+      getFieldName: function($picker) { return $picker.attr('id'); },
       loadContent: function($picker, callback) {
         callback([
             { Value: '1', Label: 'img 1' },
@@ -37,8 +44,8 @@
       }
     });
 
-    $('.sample-itempicker.multiple').itemPicker({
-      getFieldName: function ($picker) { return $picker.attr('fieldName'); },
+    $('#sampleMultiple').itemPicker({
+      getFieldName: function ($picker) { return $picker.attr('id'); },
       multiselect: true,
       loadContent: function ($picker, callback) {
         callback([
@@ -53,9 +60,9 @@
       }
     });
 
-    $('.sample-itempicker.images').itemPicker({
+    $('#sampleWithImages').itemPicker({
       multiselect: true,
-      getFieldName: function ($picker) { return $picker.attr('fieldName'); },
+      getFieldName: function ($picker) { return $picker.attr('id'); },
       loadContent: function ($picker, callback) {
         callback([
             { Value: '1', Label: 'img 1', Thumbnail: 'Content/img/a.png' },
