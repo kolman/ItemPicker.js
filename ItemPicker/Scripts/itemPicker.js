@@ -32,6 +32,14 @@
 
   function initializeElement($picker) {
     $picker.css('overflow-y', 'auto');
+    $picker.change(function (e) {
+      var selected = $(e.target).is(":checked");
+      var $item = $(e.target).closest('.itemPicker-item');
+      if (selected)
+        $item.addClass("selected");
+      else
+        $item.removeClass("selected");
+    });
   }
 
   function reload($picker) {

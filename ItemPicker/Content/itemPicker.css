@@ -7,3 +7,7 @@
 .itemPicker-item:hover {
     background-color: silver;
 }
+
+.itemPicker-item.selected {
+    background-color: cornflowerblue;
+}
