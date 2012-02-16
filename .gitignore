@@ -116,3 +116,4 @@ Gmc/Fido/Samples/SurveyDataServiceClient/sfwsc.*
 *.crunchproject.local.xml
 packages/*
 *.ncrunchsolution.user
+ItemPicker/test/*.png
