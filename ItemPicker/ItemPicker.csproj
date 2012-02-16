@@ -55,6 +55,7 @@
     <Content Include="Content\img\b.png" />
     <Content Include="Content\img\c.png" />
     <Content Include="Content\itemPicker.css" />
+    <Content Include="Content\qunit.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -118,6 +119,7 @@
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.17.js" />
     <Content Include="Scripts\jquery-ui-1.8.17.min.js" />
+    <Content Include="Scripts\qunit.js" />
     <Content Include="test\SingleSelection.htm" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
