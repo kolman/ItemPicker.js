@@ -8,7 +8,7 @@
   <link type="text/css" rel="stylesheet" href="../Content/itemPicker.css" />
   <script type="text/javascript" src="../Scripts/itemPicker.js"></script>
 
-<script>
+<script type="text/javascript">
   $(document).ready(function () {
 
     $('#picker').itemPicker({
@@ -21,14 +21,14 @@
       }
     });
 
-      test("Only one item is selected", function() {
-          var $items = $('#picker .itemPicker-item');
-          $($items[0]).find('label').click();
-          $($items[1]).find('label').click();
-          var $selected = $('#picker .itemPicker-item.selected');
-          ok($selected.length == 1, "Only one item can be selected");
-          ok($selected[0] === $items[1], "Second item should be selected");
-      });
+    test("Only one item is selected", function () {
+      var $items = $('#picker .itemPicker-item');
+      $($items[0]).find('label').click();
+      $($items[1]).find('label').click();
+      var $selected = $('#picker .itemPicker-item.selected');
+      ok($selected.length == 1, "Only one item can be selected");
+      ok($selected[0] === $items[1], "Second item should be selected");
+    });
 
   });
 </script>
