@@ -1,7 +1,7 @@
 ﻿(function ($) {
   var defaults = {
     selection: 'single', // 'single', 'multiple', 'none'
-    getFieldName: function ($picker) { },
+    getFieldName: function ($picker) { return $picker.attr('id'); },
     loadContent: function ($picker, callback) { }
   };
 
