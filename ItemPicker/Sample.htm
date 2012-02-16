@@ -28,7 +28,7 @@
     <div id="sampleWithImages" class="sample-itempicker images" style="width:500px; height:300px"></div>
     <h2>Drag'n'drop picker</h2>
     <div id="sampleImageSource" class="sample-itempicker images" style="width:500px; height:300px"></div>
-    <div id="selected-files" class="sample-itempicker images" style="width:500px; height:300px; overflow-y: auto"></div>
+    <div id="selected-files" class="sample-itempicker images" style="width:500px; height:500px; overflow-y: auto"></div>
   
     <script type="text/javascript" src="Scripts/jquery-1.7.1.js"></script>
     <script type="text/javascript" src="Scripts/jquery-ui-1.8.17.js"></script>
@@ -51,7 +51,7 @@
 
       $('#sampleMultiple').itemPicker({
         getFieldName: function ($picker) { return $picker.attr('id'); },
-        multiselect: true,
+        selection: 'multiple',
         loadContent: function ($picker, callback) {
           callback([
               { Value: 'a', Label: 'img a' },
@@ -66,7 +66,7 @@
       });
 
       $('#sampleWithImages').itemPicker({
-        multiselect: true,
+        selection: 'multiple',
         getFieldName: function ($picker) { return $picker.attr('id'); },
         loadContent: function ($picker, callback) {
           callback([
@@ -78,6 +78,7 @@
       });
 
       $('#sampleImageSource').itemPicker({
+        selection: 'none',
         getFieldName: function ($picker) { return $picker.attr('id'); },
         loadContent: function ($picker, callback) {
           callback([
@@ -94,7 +95,7 @@
       });
 
       $('#selected-files').itemPicker({
-        multiselect: true
+        selection: 'single'
       }).sortable();
     </script>
   </body>

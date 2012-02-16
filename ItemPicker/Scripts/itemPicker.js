@@ -1,6 +1,6 @@
 ﻿(function ($) {
   var defaults = {
-    multiselect: false,
+    selection: 'single', // 'single', 'multiple', 'none'
     getFieldName: function ($picker) { },
     loadContent: function ($picker, callback) { }
   };
@@ -58,20 +58,22 @@
     if (!fieldName) throw 'Field name must be set';
     for (var i = 0; i < content.length; i++) {
       var $itemContainer = $('<div class="itemPicker-item"></div>').appendTo($container);
-      createItem($itemContainer, fieldName, settings.multiselect, content[i]);
+      createItem($itemContainer, fieldName, settings.selection, content[i]);
     }
   }
 
-  function createItem($container, fieldName, multiselect, item) {
+  function createItem($container, fieldName, selection, item) {
     var $label = $('<label></label>').appendTo($container);
 
-    var type = multiselect ? 'checkbox' : 'radio';
-    $('<input/>').attr('type', type).attr('value', item.Value).attr('name', fieldName).appendTo($label);
+    var type;
+    if (selection == 'single') type = 'radio';
+    if (selection == 'multiple') type = 'checkbox';
+    if (type) $('<input/>').attr('type', type).attr('value', item.Value).attr('name', fieldName).appendTo($label);
 
     if (item.Thumbnail) {
       $('<img/>').attr('src', item.Thumbnail).appendTo($label);
     }
-    
+
     $('<span></span>').text(item.Label).appendTo($label);
   }
 })(jQuery);
