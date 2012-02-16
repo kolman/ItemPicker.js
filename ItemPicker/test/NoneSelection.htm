@@ -12,7 +12,7 @@
     $(document).ready(function() {
 
         $('#picker').itemPicker({
-            selection: 'single',
+            selection: 'none',
             loadContent: function($picker, callback) {
                 callback([
                         { Value: 1, Label: 'item 1' },
@@ -22,13 +22,11 @@
             }
         });
 
-        test("Only one item is selected", function() {
+        test("None of the items is selected", function() {
             var $items = $('#picker .itemPicker-item');
-            $($items[0]).find('label').click();
             $($items[1]).find('label').click();
             var $selected = $('#picker .itemPicker-item.selected');
-            ok($selected.length == 1, "Only one item can be selected");
-            ok($selected[0] === $items[1], "Second item should be selected");
+            ok($selected.length == 0, "No item should be selected");
         });
 
     });
