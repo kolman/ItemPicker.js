@@ -149,6 +149,7 @@
     <Content Include="Scripts\jquery-ui-1.8.17.js" />
     <Content Include="Scripts\jquery-ui-1.8.17.min.js" />
     <Content Include="Scripts\qunit.js" />
+    <Content Include="test\MultipleSelection.htm" />
     <Content Include="test\SingleSelection.htm" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
