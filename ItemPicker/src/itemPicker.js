@@ -37,21 +37,10 @@
         var settings = getSettings($picker);
         var fieldName = settings.getFieldName($picker);
         if (!fieldName) throw 'Field name must be set';
-        var $select = $('<select></select>').appendTo($picker).hide().attr('name', fieldName);
-        if (settings.selection == 'multiple') $select.attr('multiple', 'multiple');
 
         $picker.click(function (e) {
-            var $item = $(e.target).closest('.itemPicker-item')
+            var $item = $(e.target).closest('.itemPicker-item');
             $item.toggleClass('selected');
-            var $option = $item.data('option');
-            if ($item.hasClass('selected'))
-                $option.attr('selected', 'selected');
-            else
-                $option.removeAttr('selected');
-        });
-
-        $select.change(function () {
-            alert('change');
         });
     }
 
@@ -64,12 +53,9 @@
 
     function setContent($picker, content) {
         var $container = $picker;
-        $container.find('.itemPicker-item').remove();
-        var $select = $picker.find('select');
-        $select.empty();
+        $container.empty();
         for (var i = 0; i < content.length; i++) {
-            var $option = $('<option></option>').appendTo($select).attr('value', content[i].Value);
-            var $itemContainer = $('<div class="itemPicker-item"></div>').appendTo($container).data('option', $option);
+            var $itemContainer = $('<div class="itemPicker-item"></div>').appendTo($container);
             createItem($itemContainer, content[i]);
         }
     }

@@ -150,7 +150,6 @@
     <Content Include="Scripts\jquery-ui-1.8.17.js" />
     <Content Include="Scripts\jquery-ui-1.8.17.min.js" />
     <Content Include="Scripts\qunit.js" />
-    <Content Include="test\UsesUnderlyingSelectBox.htm" />
     <Content Include="test\Thumbnails.htm" />
     <Content Include="test\NoneSelection.htm" />
     <Content Include="test\MultipleSelection.htm" />
