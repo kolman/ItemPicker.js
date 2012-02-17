@@ -27,8 +27,23 @@
         }
     };
 
+    $.fn.itemPicker.originalVal = $.fn.val;
+    $.fn.extend({
+        val: function (value) {
+            if (getSettings($(this))) {
+                if (value == undefined)
+                    return $(this).find('.itemPicker-item selected').map(function (i) {
+                        return $.data(i, 'item').Value;
+                    });
+                throw 'setting value not implemented';
+                // return $.fn.itemPicker.originalVal.call(/* setter */, value);
+            }
+            return $.fn.itemPicker.originalVal.call(this, value);
+        }
+    });
+
     function getSettings($picker) {
-        return $picker.data('itemPicker');
+        return $.data($picker, 'itemPicker');
     }
 
     function initializeElement($picker) {
@@ -57,8 +72,9 @@
         var $container = $picker;
         $container.empty();
         for (var i = 0; i < content.length; i++) {
-            var $itemContainer = $('<div class="itemPicker-item"></div>').appendTo($container);
-            createItem($itemContainer, content[i]);
+            var item = content[i];
+            var $itemContainer = $('<div class="itemPicker-item"></div>').appendTo($container).data('item', item);
+            createItem($itemContainer, item);
         }
     }
 
