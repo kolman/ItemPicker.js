@@ -38,10 +38,15 @@
         var fieldName = settings.getFieldName($picker);
         if (!fieldName) throw 'Field name must be set';
 
-        $picker.click(function (e) {
-            var $item = $(e.target).closest('.itemPicker-item');
-            $item.toggleClass('selected');
-        });
+        if (settings.selection != 'none') {
+            $picker.click(function (e) {
+                var $item = $(e.target).closest('.itemPicker-item');
+                $item.toggleClass('selected');
+                if (settings.selection == 'single') {
+                    $picker.find('.itemPicker-item').not($item).removeClass('selected');
+                }
+            });
+        }
     }
 
     function reload($picker) {
