@@ -76,16 +76,9 @@
 
     function createItem($container, item) {
         var $label = $('<label></label>').appendTo($container);
-        /*
-        var type;
-        if (selection == 'single') type = 'radio';
-        if (selection == 'multiple') type = 'checkbox';
-        if (type) $('<input/>').attr('type', type).attr('value', item.Value).attr('name', fieldName).appendTo($label);
-        */
         if (item.Thumbnail) {
             $('<img/>').attr('src', item.Thumbnail).appendTo($label);
         }
-
         $('<span></span>').text(item.Label).appendTo($label);
     }
 })(jQuery);
