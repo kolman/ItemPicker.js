@@ -35,9 +35,6 @@
         $picker.css('overflow-y', 'auto');
 
         var settings = getSettings($picker);
-        var fieldName = settings.getFieldName($picker);
-        if (!fieldName) throw 'Field name must be set';
-
         if (settings.selection != 'none') {
             $picker.click(function (e) {
                 var $item = $(e.target).closest('.itemPicker-item');
