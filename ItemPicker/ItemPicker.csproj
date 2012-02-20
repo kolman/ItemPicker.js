@@ -84,6 +84,7 @@
     <Content Include="Content\img\b.png" />
     <Content Include="Content\img\c.png" />
     <Content Include="Scripts\hamcrest.js" />
+    <Content Include="Scripts\jquery.simulate.js" />
     <Content Include="src\itemPicker.css" />
     <Content Include="Content\qunit.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -150,6 +151,7 @@
     <Content Include="Scripts\jquery-ui-1.8.17.js" />
     <Content Include="Scripts\jquery-ui-1.8.17.min.js" />
     <Content Include="Scripts\qunit.js" />
+    <Content Include="test\DragDrop.htm" />
     <Content Include="test\ReturnsValue.htm" />
     <Content Include="test\Thumbnails.htm" />
     <Content Include="test\NoneSelection.htm" />
