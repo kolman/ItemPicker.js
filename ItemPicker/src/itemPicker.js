@@ -30,11 +30,17 @@
     $.fn.itemPicker.originalVal = $.fn.val;
     $.fn.extend({
         val: function (value) {
-            if (getSettings($(this))) {
-                if (value == undefined)
-                    return $(this).find('.itemPicker-item selected').map(function (i) {
-                        return $.data(i, 'item').Value;
-                    });
+            var settings = getSettings(this);
+            if (settings) {
+                if (value == undefined) {
+                    var values = this.find('.itemPicker-item.selected').map(function () {
+                        return $(this).data('item').Value;
+                    }).get();
+                    if (settings.selection == 'single') {
+                        return values.length == 1 ? values[0] : NaN;
+                    }
+                    return values;
+                }
                 throw 'setting value not implemented';
                 // return $.fn.itemPicker.originalVal.call(/* setter */, value);
             }
@@ -43,7 +49,7 @@
     });
 
     function getSettings($picker) {
-        return $.data($picker, 'itemPicker');
+        return $picker.data('itemPicker');
     }
 
     function initializeElement($picker) {
