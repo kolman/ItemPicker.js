@@ -152,6 +152,7 @@
     <Content Include="Scripts\jquery-ui-1.8.17.js" />
     <Content Include="Scripts\jquery-ui-1.8.17.min.js" />
     <Content Include="Scripts\qunit.js" />
+    <Content Include="test\DoesNotBreakOriginalVal.htm" />
     <Content Include="test\filePicker.htm" />
     <Content Include="test\DragDrop.htm" />
     <Content Include="test\ReturnsValue.htm" />

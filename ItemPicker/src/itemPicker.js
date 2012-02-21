@@ -49,7 +49,7 @@
                 throw 'setting value not implemented';
                 // return $.fn.itemPicker.originalVal.call(/* setter */, value);
             }
-            return $.fn.itemPicker.originalVal.call(this, value);
+            return $.fn.itemPicker.originalVal.apply(this, arguments);
         }
     });
 
