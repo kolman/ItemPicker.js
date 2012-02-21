@@ -1,12 +1,12 @@
 ﻿.itemPicker-item:hover {
-    background-color: silver;
+    background-color: #b5edff;
 }
 
 .itemPicker-item.selected {
-    background-color: cornflowerblue;
+    background-color: #80dfff;
 }
 
 .itemPicker-item:active {
-    background-color: blue;
+    background-color: #80d8f5;
 }
 
