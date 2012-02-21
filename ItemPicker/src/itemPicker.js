@@ -14,6 +14,11 @@
                 initializeElement($this);
                 reload($this);
             });
+        },
+        reload: function() {
+            this.each(function () {
+                reload($(this));
+            });
         }
     };
 
