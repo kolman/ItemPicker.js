@@ -92,10 +92,9 @@
     }
 
     function createItem($container, item) {
-        var $label = $('<label></label>').appendTo($container);
         if (item.Thumbnail) {
-            $('<img/>').attr('src', item.Thumbnail).appendTo($label);
+            $('<img/>').attr('src', item.Thumbnail).appendTo($container);
         }
-        $('<span></span>').text(item.Label).appendTo($label);
+        $('<span></span>').text(item.Label).appendTo($container);
     }
 })(jQuery);

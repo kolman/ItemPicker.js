@@ -1,13 +1,4 @@
-﻿.itemPicker-item label {
-    display: block;
-    width: 100%;
-}
-
-.itemPicker-item input {
-    display: none;
-}
-
-.itemPicker-item:hover {
+﻿.itemPicker-item:hover {
     background-color: silver;
 }
 

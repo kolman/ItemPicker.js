@@ -24,8 +24,8 @@
 
         test("Multiple items are selected", function() {
             var $items = $('#picker .itemPicker-item');
-            $($items[0]).find('label').click();
-            $($items[1]).find('label').click();
+            $($items[0]).click();
+            $($items[1]).click();
             var $selected = $('#picker .itemPicker-item.selected');
             ok($selected.length == 2, "Both clicked items should be selected");
             ok($selected[0] === $items[0], "First item should be selected");
