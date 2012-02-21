@@ -2,7 +2,8 @@
     var defaults = {
         selection: 'single', // 'single', 'multiple', 'none'
         getFieldName: function ($picker) { return $picker.attr('id'); },
-        loadContent: function ($picker, callback) { }
+        loadContent: function ($picker, callback) { },
+        itemFactory: createItem
     };
 
     var methods = {
@@ -80,12 +81,13 @@
     }
 
     function setContent($picker, content) {
+        var settings = getSettings($picker);
         var $container = $picker;
         $container.empty();
         for (var i = 0; i < content.length; i++) {
             var item = content[i];
             var $itemContainer = $('<div class="itemPicker-item"></div>').appendTo($container).data('item', item);
-            createItem($itemContainer, item);
+            settings.itemFactory($itemContainer, item, createItem);
         }
     }
 

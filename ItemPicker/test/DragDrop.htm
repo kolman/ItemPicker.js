@@ -22,17 +22,17 @@
                                 { Value: 2, Label: 'item 2' },
                                 { Value: 3, Label: 'item 3' }
                             ]);
+                    },
+                    itemFactory: function ($itemContainer, item, createItem) {
+                        createItem($itemContainer, item);
+                        $itemContainer.draggable({
+                            connectToSortable: $('#target'),
+                            helper: 'clone'
+                        });
                     }
                 });
 
-                $('#source .itemPicker-item').draggable({
-                    connectToSortable: '#target',
-                    helper: function () {
-                        var $clone = $(this).clone().removeAttr('id');
-                        $clone.data($(this).data());
-                        return $clone;
-                    }
-                });
+                $('#source').itemPicker('reload');
 
                 $('#target').itemPicker({
                     selection: 'single',
