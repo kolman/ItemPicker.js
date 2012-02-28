@@ -32,9 +32,22 @@
                     var t = $target.offset();
                     $movedItem.simulate('drag', { dx: 0, dy: t.top + $target.outerHeight() - 20 - i.top });
                 }
+
+                function dragItemToEndOfPicker(item) {
+                    simulateDrag($(item), $('.filePicker-target'));
+                }
+
+                var changeEventsTriggered = 0;
+                $('#filePicker').change(function () {
+                    changeEventsTriggered += 1;
+                });
+
                 var $sourceItems = $('.filePicker-source .itemPicker-item');
                 var movedItems = [$sourceItems[0], $sourceItems[2]];
-                $.each(movedItems, function () { simulateDrag($(this), $('.filePicker-target')); });
+                $.each(movedItems, function () { dragItemToEndOfPicker(this); });
+
+                var changeTriggeredOnDrop = changeEventsTriggered == 2;
+                changeEventsTriggered = 0;
 
                 test("Dragged items stays in source", function () {
                     assertThat($sourceItems[0], equalTo(movedItems[0]));
@@ -45,7 +58,7 @@
                     var $targetItems = $('.filePicker-target .itemPicker-item');
                     assertThat($targetItems.length, equalTo(movedItems.length));
                     var expectedNames = $.map(movedItems, function (e) { return $(e).text(); });
-                    var actualNames = $targetItems.map(function() { return $(this).text(); }).get();
+                    var actualNames = $targetItems.map(function () { return $(this).text(); }).get();
                     assertThat(actualNames, equalTo(expectedNames));
                 });
 
@@ -54,6 +67,9 @@
                     assertThat(value, equalTo([1, 3]));
                 });
 
+                test("Change event is triggered on drop", function () {
+                    assertThat(changeTriggeredOnDrop, equalTo(true));
+                });
             });
         </script>
   

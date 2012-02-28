@@ -88,6 +88,9 @@
                 var data = $(ui.sender).data('item');
                 var $item = $(this).data().sortable.currentItem;
                 $item.data('item', data);
+            },
+            update: function () {
+                $picker.change();
             }
         });
     }
