@@ -92,7 +92,10 @@
 
     function createItem($container, item) {
         if (item.Thumbnail) {
-            $('<img/>').attr('src', item.Thumbnail).appendTo($container);
+            $('<img/>')
+                .attr('class', 'itemPicker-image')
+                .attr('src', item.Thumbnail)
+                .appendTo($container);
         }
         $('<span></span>').text(item.Label).appendTo($container);
     }
