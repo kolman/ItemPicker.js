@@ -51,10 +51,23 @@
 
     function initializeElement($picker) {
         var settings = getSettings($picker);
+
+        if (!settings.sourceHeader) {
+            var $sourceHeader = $('<div></div>')
+                .appendTo($picker);
+            settings.sourceHeader = $sourceHeader;
+        }
+
         if (!settings.source) {
             var $source = $('<div></div>')
                 .appendTo($picker);
             settings.source = $source;
+        }
+
+        if (!settings.targetHeader) {
+            var $targetHeader = $('<div></div>')
+                .appendTo($picker);
+            settings.targetHeader = $targetHeader;
         }
 
         if (!settings.target) {
@@ -63,9 +76,50 @@
             settings.target = $target;
         }
 
+        var $addAll = $('<div class="itemPicker-addAll"><a href="#">' + settings.addAllLabel + '</a></div>')
+            .click(function () {
+                settings.source.find('.itemPicker-item').each(function () {
+                    var $item = cloneItem($(this), settings);
+                    settings.target.append($item);
+                });
+                updateItemsSelected(settings);
+                return false;
+            });
+
+        var $filterInput = $('<input type="text" />').css('visibility', 'hidden');
+
+        settings.sourceHeader
+            .addClass('itemPicker-source-header')
+            .append($filterInput)
+            .append($addAll);
+
         settings.source.itemPicker({
             selection: 'none',
             loadContent: settings.loadContent,
+            setContent: function ($picker, content, itemFactory, createItem) {
+                var $container = $picker;
+                $container.empty();
+
+                for (var i = 0; i < content.length; i++) {
+                    var item = content[i];
+
+                    var $icons = $('<div class="itemPicker-item-icons"></div>');
+                    var $icon = $('<div></div>')
+                        .attr('class', 'itemPicker-icon-add')
+                        .click(function () {
+                            var $item = cloneItem($(this).closest('.itemPicker-item'), settings);
+                            settings.target.append($item);
+                            updateItemsSelected(settings);
+                        });
+                    $icons.append($icon);
+
+                    var $itemContainer = $('<div class="itemPicker-item"></div>')
+                        .appendTo($container)
+                        .data('item', item)
+                        .append($icons);
+                    itemFactory($itemContainer, item, createItem);
+                }
+            },
             itemFactory: function ($itemContainer, item, createItem) {
                 if (settings.itemFactory)
                     settings.itemFactory($itemContainer, item, createItem);
@@ -78,6 +132,23 @@
             }
         });
 
+        var $removeAll = $('<div class="itemPicker-removeAll"><a href="#">' + settings.removeAllLabel + '</a></div>')
+            .click(function () {
+                settings.target.find('.itemPicker-item').each(function () {
+                    $(this).remove();
+                });
+                updateItemsSelected(settings);
+                return false;
+            });
+
+        var $itemsSelected = $('<span>0 ' + settings.itemsSelectedLabel + '</span>');
+        settings.itemsSelected = $itemsSelected;
+
+        settings.targetHeader
+            .addClass('itemPicker-target-header')
+            .append($itemsSelected)
+            .append($removeAll);
+
         settings.target.itemPicker({
             selection: 'single',
             loadContent: function ($picker, callback) {
@@ -88,10 +159,82 @@
                 var data = $(ui.sender).data('item');
                 var $item = $(this).data().sortable.currentItem;
                 $item.data('item', data);
+
+                $item.find('.itemPicker-item-icons').remove();
+                var $icons = $('<div class="itemPicker-item-icons"></div>');
+                createIconsForSelectedItem($icons, settings);
+                $item.append($icons);
+
+                updateItemsSelected(settings);
             },
             update: function () {
                 $picker.change();
             }
         });
+    }
+
+    function updateItemsSelected(settings) {
+        var count = settings.target.find('.itemPicker-item').size();
+        settings.itemsSelected.text(count + ' ' + settings.itemsSelectedLabel);
+    }
+
+    function cloneItem($item, settings) {
+        var $cloned = $item.clone();
+        var data = $item.data('item');
+        $cloned.data('item', data);
+
+        $cloned.find('.itemPicker-item-icons').remove();
+
+        var $icons = $('<div class="itemPicker-item-icons"></div>');
+        createIconsForSelectedItem($icons, settings);
+
+        $cloned.append($icons);
+
+        return $cloned;
+    }
+
+    function createIconsForSelectedItem($container, settings) {
+        var $iconMoveUp = $('<div></div>')
+            .attr('class', 'itemPicker-icon-moveUp')
+            .click(function () {
+                var $item = $(this).closest('.itemPicker-item');
+                $item.prev().before($item);
+            });
+
+        var $iconMoveDown = $('<div></div>')
+            .attr('class', 'itemPicker-icon-moveDown')
+            .click(function () {
+                var $item = $(this).closest('.itemPicker-item');
+                $item.next().after($item);
+            });
+
+        var $iconMoveToTop = $('<div></div>')
+            .attr('class', 'itemPicker-icon-moveToTop')
+            .click(function () {
+                var $item = $(this).closest('.itemPicker-item');
+                $item.prependTo(settings.target);
+            });
+
+        var $iconMoveToBottom = $('<div></div>')
+            .attr('class', 'itemPicker-icon-moveToBottom')
+            .click(function () {
+                var $item = $(this).closest('.itemPicker-item');
+                $item.appendTo(settings.target);
+            });
+
+        var $iconRemove = $('<div></div>')
+        .attr('class', 'itemPicker-icon-remove')
+        .click(function () {
+            $(this).closest('.itemPicker-item').remove();
+            updateItemsSelected(settings);
+        });
+
+        $container.append($iconMoveUp);
+        $container.append($iconMoveDown);
+        $container.append($iconMoveToTop);
+        $container.append($iconMoveToBottom);
+        $container.append($iconRemove);
+
+        return $container;
     }
 })(jQuery);

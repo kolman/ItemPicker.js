@@ -19,6 +19,15 @@
                         { Value: 2, Label: 'item 2' },
                         { Value: 3, Label: 'item 3' }
                     ]);
+            },
+            setContent: function ($picker, content, itemFactory, createItem) {
+                for (var i = 0; i < content.length; i++) {
+                    var item = content[i];
+                    var $itemContainer = $('<div class="itemPicker-item"></div>')
+                        .appendTo($picker)
+                        .data('item', item);
+                    itemFactory($itemContainer, item, createItem);
+                }
             }
         });
 

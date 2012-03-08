@@ -1,8 +1,10 @@
 ﻿(function ($) {
     var defaults = {
         selection: 'single', // 'single', 'multiple', 'none'
+        getFieldName: function ($picker) { return $picker.attr('id'); },
         loadContent: function ($picker, callback) { },
-        itemFactory: createItem
+        itemFactory: createItem,
+        setContent: function ($picker, content, itemFactory, createItem) { }
     };
 
     var methods = {
@@ -15,7 +17,7 @@
                 reload($this);
             });
         },
-        reload: function() {
+        reload: function () {
             this.each(function () {
                 reload($(this));
             });
@@ -75,20 +77,11 @@
     function reload($picker) {
         var settings = getSettings($picker);
         settings.loadContent($picker, function (items) {
-            setContent($picker, items);
+            settings.setContent($picker, items, settings.itemFactory, createItem);
         });
     }
 
-    function setContent($picker, content) {
-        var settings = getSettings($picker);
-        var $container = $picker;
-        $container.empty();
-        for (var i = 0; i < content.length; i++) {
-            var item = content[i];
-            var $itemContainer = $('<div class="itemPicker-item"></div>').appendTo($container).data('item', item);
-            settings.itemFactory($itemContainer, item, createItem);
-        }
-    }
+
 
     function createItem($container, item) {
         if (item.Thumbnail) {

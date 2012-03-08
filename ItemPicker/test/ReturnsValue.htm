@@ -20,14 +20,26 @@
                     ]);
         };
 
+        var setContent = function($picker, content, itemFactory, createItem) {
+            for (var i = 0; i < content.length; i++) {
+                var item = content[i];
+                var $itemContainer = $('<div class="itemPicker-item"></div>')
+                    .appendTo($picker)
+                    .data('item', item);
+                itemFactory($itemContainer, item, createItem);
+            }
+        };
+
         $('#singlepicker').itemPicker({
             selection: 'single',
-            loadContent: createItems
+            loadContent: createItems,
+            setContent: setContent
         });
 
         $('#multipicker').itemPicker({
             selection: 'multiple',
-            loadContent: createItems
+            loadContent: createItems,
+            setContent: setContent
         });
 
         test("Single selection picker returns value", function () {

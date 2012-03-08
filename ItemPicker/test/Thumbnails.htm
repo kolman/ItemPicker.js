@@ -19,6 +19,15 @@
                         { Value: '2', Label: 'img 2', Thumbnail: '../Content/img/b.png' },
                         { Value: '3', Label: 'img 3', Thumbnail: '../Content/img/c.png' }
                     ]);
+            },
+            setContent: function($picker, content, itemFactory, createItem) {
+                for (var i = 0; i < content.length; i++) {
+                    var item = content[i];
+                    var $itemContainer = $('<div class="itemPicker-item"></div>')
+                        .appendTo($picker)
+                        .data('item', item);
+                    itemFactory($itemContainer, item, createItem);
+                }
             }
         });
 
