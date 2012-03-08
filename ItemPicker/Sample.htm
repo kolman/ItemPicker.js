@@ -33,70 +33,84 @@
     <script type="text/javascript" src="Scripts/jquery-1.7.1.js"></script>
     <script type="text/javascript" src="Scripts/jquery-ui-1.8.17.js"></script>
     <script type="text/javascript" src="src/itemPicker.js"></script>
-    <script type="text/javascript">
-      $('#sample1').itemPicker({
-        getFieldName: function($picker) { return $picker.attr('id'); },
-        loadContent: function($picker, callback) {
-          callback([
-              { Value: '1', Label: 'img 1' },
-              { Value: '2', Label: 'img 2' },
-              { Value: '3', Label: 'img 3' },
-              { Value: '4', Label: 'img 4' },
-              { Value: '5', Label: 'img 5' },
-              { Value: '6', Label: 'img 6' },
-              { Value: '7', Label: 'img 7' }
-            ]);
-        }
-      });
+      <script type="text/javascript">
+          var setContent = function($picker, content, itemFactory, createItem) {
+              for (var i = 0; i < content.length; i++) {
+                  var item = content[i];
+                  var $itemContainer = $('<div class="itemPicker-item"></div>')
+                      .appendTo($picker)
+                      .data('item', item);
+                  itemFactory($itemContainer, item, createItem);
+              }
+          };
 
-      $('#sampleMultiple').itemPicker({
-        getFieldName: function ($picker) { return $picker.attr('id'); },
-        selection: 'multiple',
-        loadContent: function ($picker, callback) {
-          callback([
-              { Value: 'a', Label: 'img a' },
-              { Value: 'b', Label: 'img b' },
-              { Value: 'c', Label: 'img c' },
-              { Value: 'd', Label: 'img d' },
-              { Value: 'e', Label: 'img e' },
-              { Value: 'f', Label: 'img f' },
-              { Value: 'g', Label: 'img g' }
-            ]);
-        }
-      });
+          $('#sample1').itemPicker({
+              getFieldName: function($picker) { return $picker.attr('id'); },
+              loadContent: function($picker, callback) {
+                  callback([
+                          { Value: '1', Label: 'img 1' },
+                          { Value: '2', Label: 'img 2' },
+                          { Value: '3', Label: 'img 3' },
+                          { Value: '4', Label: 'img 4' },
+                          { Value: '5', Label: 'img 5' },
+                          { Value: '6', Label: 'img 6' },
+                          { Value: '7', Label: 'img 7' }
+                      ]);
+              },
+              setContent: setContent
+          });
 
-      $('#sampleWithImages').itemPicker({
-        selection: 'multiple',
-        getFieldName: function ($picker) { return $picker.attr('id'); },
-        loadContent: function ($picker, callback) {
-          callback([
-              { Value: '1', Label: 'img 1', Thumbnail: 'Content/img/a.png' },
-              { Value: '2', Label: 'img 2', Thumbnail: 'Content/img/b.png' },
-              { Value: '3', Label: 'img 3', Thumbnail: 'Content/img/c.png' }
-            ]);
-        }
-      });
+          $('#sampleMultiple').itemPicker({
+              getFieldName: function ($picker) { return $picker.attr('id'); },
+              selection: 'multiple',
+              loadContent: function ($picker, callback) {
+                  callback([
+                          { Value: 'a', Label: 'img a' },
+                          { Value: 'b', Label: 'img b' },
+                          { Value: 'c', Label: 'img c' },
+                          { Value: 'd', Label: 'img d' },
+                          { Value: 'e', Label: 'img e' },
+                          { Value: 'f', Label: 'img f' },
+                          { Value: 'g', Label: 'img g' }
+                      ]);
+              },
+              setContent: setContent
+          });
 
-      $('#sampleImageSource').itemPicker({
-        selection: 'none',
-        getFieldName: function ($picker) { return $picker.attr('id'); },
-        loadContent: function ($picker, callback) {
-          callback([
-              { Value: '1', Label: 'img 1', Thumbnail: 'Content/img/a.png' },
-              { Value: '2', Label: 'img 2', Thumbnail: 'Content/img/b.png' },
-              { Value: '3', Label: 'img 3', Thumbnail: 'Content/img/c.png' }
-            ]);
-        }
-      });
+          $('#sampleWithImages').itemPicker({
+              selection: 'multiple',
+              getFieldName: function ($picker) { return $picker.attr('id'); },
+              loadContent: function ($picker, callback) {
+                  callback([
+                          { Value: '1', Label: 'img 1', Thumbnail: 'Content/img/a.png' },
+                          { Value: '2', Label: 'img 2', Thumbnail: 'Content/img/b.png' },
+                          { Value: '3', Label: 'img 3', Thumbnail: 'Content/img/c.png' }
+                      ]);
+              },
+              setContent: setContent
+          });
 
-      $('#sampleImageSource .itemPicker-item').draggable({
-        connectToSortable: '#selected-files',
-        helper: 'clone'
-      });
+          $('#sampleImageSource').itemPicker({
+              selection: 'none',
+              getFieldName: function ($picker) { return $picker.attr('id'); },
+              loadContent: function ($picker, callback) {
+                  callback([
+                          { Value: '1', Label: 'img 1', Thumbnail: 'Content/img/a.png' },
+                          { Value: '2', Label: 'img 2', Thumbnail: 'Content/img/b.png' },
+                          { Value: '3', Label: 'img 3', Thumbnail: 'Content/img/c.png' }
+                      ]);
+              },
+              setContent: setContent
+          });
 
-      $('#selected-files').itemPicker({
-        selection: 'single'
-      }).sortable();
-    </script>
+          $('#sampleImageSource .itemPicker-item').draggable({
+              connectToSortable: '#selected-files',
+              helper: 'clone'
+          });
+
+          $('#selected-files').itemPicker({
+              selection: 'single'
+          }).sortable();
+      </script>
   </body>
 </html>
