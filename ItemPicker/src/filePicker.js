@@ -164,11 +164,9 @@
                 var $icons = $('<div class="itemPicker-item-icons"></div>');
                 createIconsForSelectedItem($icons, settings);
                 $item.append($icons);
-
-                updateItemsSelected(settings);
             },
             update: function () {
-                $picker.change();
+                updateItemsSelected(settings);
             }
         });
     }
@@ -176,6 +174,7 @@
     function updateItemsSelected(settings) {
         var count = settings.target.find('.itemPicker-item').size();
         settings.itemsSelected.text(count + ' ' + settings.itemsSelectedLabel);
+        settings.target.change();
     }
 
     function cloneItem($item, settings) {
