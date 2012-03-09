@@ -42,6 +42,7 @@
 }
 
 .itemPicker-item-icons {
+    visibility: hidden;
     float: right;
 }
 
