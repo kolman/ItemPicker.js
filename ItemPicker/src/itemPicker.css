@@ -11,6 +11,10 @@
     background-color: #b5edff;
 }
 
+.itemPicker-item:hover .itemPicker-item-icons {
+    visibility: visible;
+}
+
 .itemPicker-item.selected {
     background-color: #80dfff;
 }

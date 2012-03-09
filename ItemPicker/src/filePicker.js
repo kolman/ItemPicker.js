@@ -80,7 +80,6 @@
             .click(function () {
                 settings.source.find('.itemPicker-item').each(function () {
                     var $item = cloneItem($(this), settings);
-                    showIconsOnHover($item);
                     settings.target.append($item);
                 });
                 onTargetUpdated(settings);
@@ -118,7 +117,6 @@
                         .appendTo($container)
                         .data('item', item)
                         .append($icons);
-                    showIconsOnHover($itemContainer);
                     itemFactory($itemContainer, item, createItem);
                 }
             },
@@ -165,7 +163,6 @@
                 $item.find('.itemPicker-item-icons').remove();
                 var $icons = $('<div class="itemPicker-item-icons"></div>');
                 createIconsForSelectedItem($icons, settings);
-                showIconsOnHover($item);
                 $item.append($icons);
             },
             update: function () {
@@ -191,7 +188,6 @@
         createIconsForSelectedItem($icons, settings);
 
         $cloned.append($icons);
-        showIconsOnHover($cloned);
 
         return $cloned;
     }
@@ -201,7 +197,6 @@
             .attr('class', 'itemPicker-icon-moveUp')
             .click(function () {
                 var $item = $(this).closest('.itemPicker-item');
-                hideItemIcons($item);
                 $item.prev().before($item);
                 onTargetUpdated(settings);
             });
@@ -210,7 +205,6 @@
             .attr('class', 'itemPicker-icon-moveDown')
             .click(function () {
                 var $item = $(this).closest('.itemPicker-item');
-                hideItemIcons($item);
                 $item.next().after($item);
                 onTargetUpdated(settings);
             });
@@ -219,7 +213,6 @@
             .attr('class', 'itemPicker-icon-moveToTop')
             .click(function () {
                 var $item = $(this).closest('.itemPicker-item');
-                hideItemIcons($item);
                 $item.prependTo(settings.target);
                 onTargetUpdated(settings);
             });
@@ -228,7 +221,6 @@
             .attr('class', 'itemPicker-icon-moveToBottom')
             .click(function () {
                 var $item = $(this).closest('.itemPicker-item');
-                hideItemIcons($item);
                 $item.appendTo(settings.target);
                 onTargetUpdated(settings);
             });
@@ -247,17 +239,5 @@
         $container.append($iconRemove);
 
         return $container;
-    }
-
-    function showIconsOnHover($item) {
-        $item.hover(function () {
-            $(this).find('.itemPicker-item-icons').css('visibility', 'visible');
-        }, function () {
-            $(this).find('.itemPicker-item-icons').css('visibility', 'hidden');
-        });
-    }
-
-    function hideItemIcons($item) {
-        $item.find('.itemPicker-item-icons').css('visibility', 'hidden');
     }
 })(jQuery);
