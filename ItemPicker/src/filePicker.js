@@ -82,7 +82,7 @@
                     var $item = cloneItem($(this), settings);
                     settings.target.append($item);
                 });
-                updateItemsSelected(settings);
+                onTargetUpdated(settings);
                 return false;
             });
 
@@ -109,7 +109,7 @@
                         .click(function () {
                             var $item = cloneItem($(this).closest('.itemPicker-item'), settings);
                             settings.target.append($item);
-                            updateItemsSelected(settings);
+                            onTargetUpdated(settings);
                         });
                     $icons.append($icon);
 
@@ -137,7 +137,7 @@
                 settings.target.find('.itemPicker-item').each(function () {
                     $(this).remove();
                 });
-                updateItemsSelected(settings);
+                onTargetUpdated(settings);
                 return false;
             });
 
@@ -166,12 +166,12 @@
                 $item.append($icons);
             },
             update: function () {
-                updateItemsSelected(settings);
+                onTargetUpdated(settings);
             }
         });
     }
 
-    function updateItemsSelected(settings) {
+    function onTargetUpdated(settings) {
         var count = settings.target.find('.itemPicker-item').size();
         settings.itemsSelected.text(count + ' ' + settings.itemsSelectedLabel);
         settings.target.change();
@@ -198,6 +198,7 @@
             .click(function () {
                 var $item = $(this).closest('.itemPicker-item');
                 $item.prev().before($item);
+                onTargetUpdated(settings);
             });
 
         var $iconMoveDown = $('<div></div>')
@@ -205,6 +206,7 @@
             .click(function () {
                 var $item = $(this).closest('.itemPicker-item');
                 $item.next().after($item);
+                onTargetUpdated(settings);
             });
 
         var $iconMoveToTop = $('<div></div>')
@@ -212,6 +214,7 @@
             .click(function () {
                 var $item = $(this).closest('.itemPicker-item');
                 $item.prependTo(settings.target);
+                onTargetUpdated(settings);
             });
 
         var $iconMoveToBottom = $('<div></div>')
@@ -219,13 +222,14 @@
             .click(function () {
                 var $item = $(this).closest('.itemPicker-item');
                 $item.appendTo(settings.target);
+                onTargetUpdated(settings);
             });
 
         var $iconRemove = $('<div></div>')
         .attr('class', 'itemPicker-icon-remove')
         .click(function () {
             $(this).closest('.itemPicker-item').remove();
-            updateItemsSelected(settings);
+            onTargetUpdated(settings);
         });
 
         $container.append($iconMoveUp);
