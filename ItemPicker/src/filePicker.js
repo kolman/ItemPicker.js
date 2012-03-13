@@ -73,7 +73,8 @@
             var dY = e.pageY - settings.resizeOrigin;
 
             // limits minimum size of source and target to 15% of the overall size of the file picker
-            if ((settings.source.height() + dY) > ($picker.height() * 0.15) && (settings.target.height() - dY) > ($picker.height() * 0.15)) {
+            var minSizeMultiplier = 0.15;
+            if ((settings.source.height() + dY) > ($picker.height() * minSizeMultiplier) && (settings.target.height() - dY) > ($picker.height() * minSizeMultiplier)) {
                 settings.resizeOrigin = e.pageY;
 
                 settings.source.height(settings.source.height() + dY);
