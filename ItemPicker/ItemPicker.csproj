@@ -85,8 +85,10 @@
     <Content Include="Content\img\c.png" />
     <Content Include="Scripts\hamcrest.js" />
     <Content Include="Scripts\jquery.simulate.js" />
+    <Content Include="src\filePicker.css" />
     <Content Include="src\filePicker.js" />
-    <Content Include="src\item_picker_icons.png" />
+    <Content Include="src\file_picker_resizer.png" />
+    <Content Include="src\file_picker_icons.png" />
     <Content Include="src\itemPicker.css" />
     <Content Include="Content\qunit.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />

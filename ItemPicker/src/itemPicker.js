@@ -60,8 +60,6 @@
     }
 
     function initializeElement($picker) {
-        $picker.css('overflow-y', 'auto');
-
         var settings = getSettings($picker);
         if (settings.selection != 'none') {
             $picker.click(function (e) {
@@ -80,8 +78,6 @@
             settings.setContent($picker, items, settings.itemFactory, createItem);
         });
     }
-
-
 
     function createItem($container, item) {
         if (item.Thumbnail) {

@@ -33,7 +33,7 @@
             var settings = getSettings(this);
             if (settings) {
                 if (value == undefined) {
-                    var values = settings.target.find('.itemPicker-item').map(function () {
+                    var values = settings.targetContent.find('.itemPicker-item').map(function () {
                         return $(this).data('item').Value;
                     }).get();
                     return values;
@@ -52,35 +52,68 @@
     function initializeElement($picker) {
         var settings = getSettings($picker);
 
-        if (!settings.sourceHeader) {
-            var $sourceHeader = $('<div></div>')
-                .appendTo($picker);
-            settings.sourceHeader = $sourceHeader;
-        }
-
         if (!settings.source) {
-            var $source = $('<div></div>')
-                .appendTo($picker);
-            settings.source = $source;
+            settings.source = $('<div></div>');
         }
+        settings.source
+            .appendTo($picker)
+            .addClass('filePicker-source');
 
-        if (!settings.targetHeader) {
-            var $targetHeader = $('<div></div>')
-                .appendTo($picker);
-            settings.targetHeader = $targetHeader;
-        }
+        settings.resizing = false;
+        settings.resizer = $('<div></div>')
+            .appendTo($picker)
+            .addClass('filePicker-resizer')
+            .mousedown(function (e) {
+                settings.resizeOrigin = e.pageY;
+                settings.resizing = true;
+            });
+
+        $(document).mousemove(function (e) {
+            if (!settings.resizing) return;
+            var dY = e.pageY - settings.resizeOrigin;
+
+            // limits minimum size of source and target to 15% of the overall size of the file picker
+            if ((settings.source.height() + dY) > ($picker.height() * 0.15) && (settings.target.height() - dY) > ($picker.height() * 0.15)) {
+                settings.resizeOrigin = e.pageY;
+
+                settings.source.height(settings.source.height() + dY);
+                settings.target.height(settings.target.height() - dY);
+            }
+        })
+            .mouseup(function () {
+                settings.resizing = false;
+            });
 
         if (!settings.target) {
-            var $target = $('<div></div>')
-                .appendTo($picker);
-            settings.target = $target;
+            settings.target = $('<div></div>');
         }
+        settings.target
+            .appendTo($picker)
+            .addClass('filePicker-target');
 
-        var $addAll = $('<div class="itemPicker-addAll"><a href="#">' + settings.addAllLabel + '</a></div>')
+        var $sourceHeader = $('<div></div>')
+            .appendTo(settings.source);
+        settings.sourceHeader = $sourceHeader;
+
+        var $sourceContent = $('<div></div>')
+            .appendTo(settings.source);
+        settings.sourceContent = $sourceContent;
+        settings.sourceContent.addClass('filePicker-source-content');
+
+        var $targetHeader = $('<div></div>')
+            .appendTo(settings.target);
+        settings.targetHeader = $targetHeader;
+
+        var $targetContent = $('<div></div>')
+            .appendTo(settings.target);
+        settings.targetContent = $targetContent;
+        settings.targetContent.addClass('filePicker-target-content');
+
+        var $addAll = $('<div class="filePicker-addAll"><a href="#">' + settings.addAllLabel + '</a></div>')
             .click(function () {
-                settings.source.find('.itemPicker-item').each(function () {
+                settings.sourceContent.find('.itemPicker-item').each(function () {
                     var $item = cloneItem($(this), settings);
-                    settings.target.append($item);
+                    settings.targetContent.append($item);
                 });
                 onTargetUpdated(settings);
                 return false;
@@ -89,11 +122,11 @@
         var $filterInput = $('<input type="text" />').css('visibility', 'hidden');
 
         settings.sourceHeader
-            .addClass('itemPicker-source-header')
+            .addClass('filePicker-source-header')
             .append($filterInput)
             .append($addAll);
 
-        settings.source.itemPicker({
+        settings.sourceContent.itemPicker({
             selection: 'none',
             loadContent: settings.loadContent,
             setContent: function ($picker, content, itemFactory, createItem) {
@@ -103,12 +136,12 @@
                 for (var i = 0; i < content.length; i++) {
                     var item = content[i];
 
-                    var $icons = $('<div class="itemPicker-item-icons"></div>');
+                    var $icons = $('<div class="filePicker-item-icons"></div>');
                     var $icon = $('<div></div>')
-                        .attr('class', 'itemPicker-icon-add')
+                        .attr('class', 'filePicker-icon-add')
                         .click(function () {
                             var $item = cloneItem($(this).closest('.itemPicker-item'), settings);
-                            settings.target.append($item);
+                            settings.targetContent.append($item);
                             onTargetUpdated(settings);
                         });
                     $icons.append($icon);
@@ -126,15 +159,15 @@
                 else
                     createItem($itemContainer, item);
                 $itemContainer.draggable({
-                    connectToSortable: settings.target,
+                    connectToSortable: settings.targetContent,
                     helper: 'clone'
                 });
             }
         });
 
-        var $removeAll = $('<div class="itemPicker-removeAll"><a href="#">' + settings.removeAllLabel + '</a></div>')
+        var $removeAll = $('<div class="filePicker-removeAll"><a href="#">' + settings.removeAllLabel + '</a></div>')
             .click(function () {
-                settings.target.find('.itemPicker-item').each(function () {
+                settings.targetContent.find('.itemPicker-item').each(function () {
                     $(this).remove();
                 });
                 onTargetUpdated(settings);
@@ -145,11 +178,11 @@
         settings.itemsSelected = $itemsSelected;
 
         settings.targetHeader
-            .addClass('itemPicker-target-header')
+            .addClass('filePicker-target-header')
             .append($itemsSelected)
             .append($removeAll);
 
-        settings.target.itemPicker({
+        settings.targetContent.itemPicker({
             selection: 'single',
             loadContent: function ($picker, callback) {
                 callback([]);
@@ -160,8 +193,8 @@
                 var $item = $(this).data().sortable.currentItem;
                 $item.data('item', data);
 
-                $item.find('.itemPicker-item-icons').remove();
-                var $icons = $('<div class="itemPicker-item-icons"></div>');
+                $item.find('.filePicker-item-icons').remove();
+                var $icons = $('<div class="filePicker-item-icons"></div>');
                 createIconsForSelectedItem($icons, settings);
                 $item.append($icons);
             },
@@ -169,12 +202,14 @@
                 onTargetUpdated(settings);
             }
         });
+
+        fitToSize($picker, settings);
     }
 
     function onTargetUpdated(settings) {
-        var count = settings.target.find('.itemPicker-item').size();
+        var count = settings.targetContent.find('.itemPicker-item').size();
         settings.itemsSelected.text(count + ' ' + settings.itemsSelectedLabel);
-        settings.target.change();
+        settings.targetContent.change();
     }
 
     function cloneItem($item, settings) {
@@ -182,9 +217,9 @@
         var data = $item.data('item');
         $cloned.data('item', data);
 
-        $cloned.find('.itemPicker-item-icons').remove();
+        $cloned.find('.filePicker-item-icons').remove();
 
-        var $icons = $('<div class="itemPicker-item-icons"></div>');
+        var $icons = $('<div class="filePicker-item-icons"></div>');
         createIconsForSelectedItem($icons, settings);
 
         $cloned.append($icons);
@@ -192,9 +227,25 @@
         return $cloned;
     }
 
+    function fitToSize($picker, settings) {
+        var availableHeight = getAvailableHeight($picker, settings);
+
+        // divide the remaining height between source and target to 66% / 34%
+        settings.source.height(availableHeight * 0.66);
+        settings.target.height(availableHeight * 0.34);
+    }
+
+    function getAvailableHeight($picker, settings) {
+        var height = $picker.height() - settings.resizer.height();
+        // substract border of source and target elements
+        height -= (settings.source.outerHeight() - settings.source.height());
+        height -= (settings.target.outerHeight() - settings.target.height());
+        return height;
+    }
+
     function createIconsForSelectedItem($container, settings) {
         var $iconMoveUp = $('<div></div>')
-            .attr('class', 'itemPicker-icon-moveUp')
+            .attr('class', 'filePicker-icon-moveUp')
             .click(function () {
                 var $item = $(this).closest('.itemPicker-item');
                 $item.prev().before($item);
@@ -202,7 +253,7 @@
             });
 
         var $iconMoveDown = $('<div></div>')
-            .attr('class', 'itemPicker-icon-moveDown')
+            .attr('class', 'filePicker-icon-moveDown')
             .click(function () {
                 var $item = $(this).closest('.itemPicker-item');
                 $item.next().after($item);
@@ -210,23 +261,23 @@
             });
 
         var $iconMoveToTop = $('<div></div>')
-            .attr('class', 'itemPicker-icon-moveToTop')
+            .attr('class', 'filePicker-icon-moveToTop')
             .click(function () {
                 var $item = $(this).closest('.itemPicker-item');
-                $item.prependTo(settings.target);
+                $item.prependTo(settings.targetContent);
                 onTargetUpdated(settings);
             });
 
         var $iconMoveToBottom = $('<div></div>')
-            .attr('class', 'itemPicker-icon-moveToBottom')
+            .attr('class', 'filePicker-icon-moveToBottom')
             .click(function () {
                 var $item = $(this).closest('.itemPicker-item');
-                $item.appendTo(settings.target);
+                $item.appendTo(settings.targetContent);
                 onTargetUpdated(settings);
             });
 
         var $iconRemove = $('<div></div>')
-        .attr('class', 'itemPicker-icon-remove')
+        .attr('class', 'filePicker-icon-remove')
         .click(function () {
             $(this).closest('.itemPicker-item').remove();
             onTargetUpdated(settings);

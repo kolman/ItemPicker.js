@@ -11,10 +11,6 @@
     background-color: #b5edff;
 }
 
-.itemPicker-item:hover .itemPicker-item-icons {
-    visibility: visible;
-}
-
 .itemPicker-item.selected {
     background-color: #80dfff;
 }
@@ -25,58 +21,4 @@
 
 .itemPicker-image {
     vertical-align: middle;
-}
-
-.itemPicker-source-header, .itemPicker-target-header {
-    background-color: black;
-    color: white;
-    padding: 0.5em;
-}
-
-.itemPicker-target-header {
-        margin-top: 10px;
-}
-
-.itemPicker-removeAll, .itemPicker-addAll {
-    float: right;
-}
-
-.itemPicker-removeAll a, .itemPicker-addAll a {
-    color: white;
-}
-
-.itemPicker-item-icons {
-    visibility: hidden;
-    float: right;
-}
-
-.itemPicker-icon-add, .itemPicker-icon-moveUp, .itemPicker-icon-moveDown, .itemPicker-icon-moveToTop, .itemPicker-icon-moveToBottom, .itemPicker-icon-remove {
-    float: left;
-    width: 16px;
-    height: 16px;
-    background-image: url('item_picker_icons.png');
-}
-
-.itemPicker-icon-add {
-    background-position: 0px 0px;
-}
-
-.itemPicker-icon-moveUp {
-    background-position: 64px 0px;
-}
-
-.itemPicker-icon-moveDown {
-    background-position: 48px 0px;
-}
-
-.itemPicker-icon-moveToTop {
-    background-position: 32px 0px;
-}
-
-.itemPicker-icon-moveToBottom {
-    background-position: 16px 0px;
-}
-
-.itemPicker-icon-remove {
-    background-position: 80px 0px;
 }

@@ -1,0 +1,86 @@
+﻿.itemPicker-item:hover .filePicker-item-icons {
+    visibility: visible;
+}
+
+.filePicker-source {
+    position: relative;
+    height: 60%;
+}
+
+.filePicker-source-content, .filePicker-target-content {
+    overflow: auto;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    top: 3em;
+}
+
+.filePicker-target-content {
+    overflow-y: scroll;
+}
+
+.filePicker-source-header, .filePicker-target-header {
+    background-color: black;
+    color: white;
+    padding: 0.5em;
+    height: 2em;
+}
+
+.filePicker-target {
+    position: relative;
+    height: 30%
+}
+
+.filePicker-resizer {
+    height: 9px;
+    background: url('file_picker_resizer.png') center no-repeat #fff;
+}
+
+.filePicker-resizer:hover {
+    cursor: s-resize;
+}
+
+.filePicker-removeAll, .filePicker-addAll {
+    float: right;
+}
+
+.filePicker-removeAll a, .filePicker-addAll a {
+    color: white;
+}
+
+.filePicker-item-icons {
+    visibility: hidden;
+    float: right;
+}
+
+.filePicker-icon-add, .filePicker-icon-moveUp, .filePicker-icon-moveDown, .filePicker-icon-moveToTop, .filePicker-icon-moveToBottom, .filePicker-icon-remove {
+    float: left;
+    width: 16px;
+    height: 16px;
+    background-image: url('file_picker_icons.png');
+}
+
+.filePicker-icon-add {
+    background-position: 0px 0px;
+}
+
+.filePicker-icon-moveUp {
+    background-position: 64px 0px;
+}
+
+.filePicker-icon-moveDown {
+    background-position: 48px 0px;
+}
+
+.filePicker-icon-moveToTop {
+    background-position: 32px 0px;
+}
+
+.filePicker-icon-moveToBottom {
+    background-position: 16px 0px;
+}
+
+.filePicker-icon-remove {
+    background-position: 80px 0px;
+}
