@@ -81,9 +81,9 @@
                 settings.target.height(settings.target.height() - dY);
             }
         })
-            .mouseup(function () {
-                settings.resizing = false;
-            });
+        .mouseup(function () {
+            settings.resizing = false;
+        });
 
         if (!settings.target) {
             settings.target = $('<div></div>');
@@ -127,6 +127,10 @@
             .append($filterInput)
             .append($addAll);
 
+        if (!settings.dragContainer) {
+            settings.dragContainer = settings.source.parent();
+        }
+
         settings.sourceContent.itemPicker({
             selection: 'none',
             loadContent: settings.loadContent,
@@ -161,7 +165,8 @@
                     createItem($itemContainer, item);
                 $itemContainer.draggable({
                     connectToSortable: settings.targetContent,
-                    helper: 'clone'
+                    helper: 'clone',
+                    appendTo: settings.dragContainer
                 });
             }
         });
@@ -201,7 +206,8 @@
             },
             update: function () {
                 onTargetUpdated(settings);
-            }
+            },
+            appendTo: settings.dragContainer
         });
 
         fitToSize($picker, settings);
