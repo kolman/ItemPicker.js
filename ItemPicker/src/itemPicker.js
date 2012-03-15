@@ -86,6 +86,9 @@
                 .attr('src', item.Thumbnail)
                 .appendTo($container);
         }
-        $('<span></span>').text(item.Label).appendTo($container);
+        $('<span></span>')
+            .addClass('itemPicker-item-text')
+            .text(item.Label)
+            .appendTo($container);
     }
 })(jQuery);

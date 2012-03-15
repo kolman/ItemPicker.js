@@ -1,5 +1,7 @@
 ﻿.itemPicker-item {
+    white-space: nowrap;
     padding: 5px;
+    position: relative;
 }
 
 .itemPicker-item span {
@@ -21,4 +23,9 @@
 
 .itemPicker-image {
     vertical-align: middle;
+}
+
+.itemPicker-item-text {
+    white-space: nowrap;
+    overflow: hidden;
 }

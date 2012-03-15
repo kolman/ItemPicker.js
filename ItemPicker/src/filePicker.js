@@ -165,7 +165,11 @@
                     createItem($itemContainer, item);
                 $itemContainer.draggable({
                     connectToSortable: settings.targetContent,
-                    helper: 'clone',
+                    helper: function () {
+                        var $clone = $(this).clone();
+                        $clone.width(settings.sourceContent.width());
+                        return $clone;
+                    },
                     appendTo: settings.dragContainer
                 });
             }

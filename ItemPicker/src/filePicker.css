@@ -8,7 +8,8 @@
 }
 
 .filePicker-source-content, .filePicker-target-content {
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
     position: absolute;
     bottom: 0px;
     left: 0px;
@@ -18,7 +19,6 @@
 
 .filePicker-target-content {
     overflow-y: scroll;
-    overflow-x: hidden;
 }
 
 .filePicker-source-header, .filePicker-target-header {
@@ -35,7 +35,7 @@
 
 .filePicker-resizer {
     height: 9px;
-    background: url('file_picker_resizer.png') center no-repeat #fff;
+    background: url('file_picker_resizer.png') center no-repeat;
 }
 
 .filePicker-resizer:hover {
@@ -52,7 +52,20 @@
 
 .filePicker-item-icons {
     visibility: hidden;
-    float: right;
+    padding: 5px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    height: 100%;
+    background-color: #b5edff;
+}
+
+.itemPicker-item.selected .filePicker-item-icons {
+    background-color: #80dfff;
+}
+
+.itemPicker-item:active .filePicker-item-icons {
+    background-color: #80d8f5;
 }
 
 .filePicker-icon-add, .filePicker-icon-moveUp, .filePicker-icon-moveDown, .filePicker-icon-moveToTop, .filePicker-icon-moveToBottom, .filePicker-icon-remove {
