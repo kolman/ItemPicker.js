@@ -14,7 +14,7 @@
     bottom: 0px;
     left: 0px;
     right: 0px;
-    top: 3em;
+    top: 2.2em;
 }
 
 .filePicker-target-content {
@@ -25,7 +25,8 @@
     background-color: black;
     color: white;
     padding: 0.5em;
-    height: 2em;
+    height: 1.2em;
+    line-height: 1.2em;
 }
 
 .filePicker-target {
