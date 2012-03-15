@@ -61,6 +61,7 @@
 
     function initializeElement($picker) {
         var settings = getSettings($picker);
+        $picker.addClass('itemPicker');
         if (settings.selection != 'none') {
             $picker.click(function (e) {
                 var $item = $(e.target).closest('.itemPicker-item');

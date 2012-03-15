@@ -1,7 +1,12 @@
-﻿.itemPicker-item {
+﻿.itemPicker {
+    background: #fff;
+}
+
+.itemPicker-item {
     white-space: nowrap;
-    padding: 5px;
     position: relative;
+    overflow: hidden;
+    padding: 5px;
 }
 
 .itemPicker-item span {
