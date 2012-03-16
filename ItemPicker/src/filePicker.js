@@ -60,6 +60,13 @@
             .appendTo($picker)
             .addClass('filePicker-source');
 
+        settings.source.dblclick(function (e) {
+            var $item = $(e.target).closest('.itemPicker-item');
+            var $clonedItem = cloneItem($item, settings);
+            settings.targetContent.append($clonedItem);
+            onTargetUpdated(settings);
+        });
+
         settings.resizing = false;
         settings.resizer = $('<div></div>')
             .appendTo($picker)
