@@ -4,7 +4,7 @@
         getFieldName: function ($picker) { return $picker.attr('id'); },
         loadContent: function ($picker, callback) { },
         itemFactory: createItem,
-        setContent: function ($picker, content, itemFactory, createItem) { }
+        setContent: setContent
     };
 
     var methods = {
@@ -91,5 +91,18 @@
             .addClass('itemPicker-item-text')
             .text(item.Label)
             .appendTo($container);
+    }
+
+    function setContent($picker, content, itemFactory, createItem) {
+        var $container = $picker;
+        $container.empty();
+
+        for (var i = 0; i < content.length; i++) {
+            var item = content[i];
+            var $itemContainer = $('<div class="itemPicker-item"></div>')
+                    .appendTo($container)
+                    .data('item', item);
+            itemFactory($itemContainer, item, createItem);
+        }
     }
 })(jQuery);

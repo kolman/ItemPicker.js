@@ -135,23 +135,8 @@
         settings.sourceContent.itemPicker({
             selection: 'none',
             loadContent: settings.loadContent,
-            setContent: function ($picker, content, itemFactory, createItem) {
-                var $container = $picker;
-                $container.empty();
-
-                for (var i = 0; i < content.length; i++) {
-                    var item = content[i];
-
-                    var $icons = createIconsForSourceItem(settings);
-
-                    var $itemContainer = $('<div class="itemPicker-item"></div>')
-                        .appendTo($container)
-                        .data('item', item)
-                        .append($icons);
-                    itemFactory($itemContainer, item, createItem);
-                }
-            },
             itemFactory: function ($itemContainer, item, createItem) {
+                $itemContainer.append(createIconsForSourceItem(settings));
                 if (settings.itemFactory)
                     settings.itemFactory($itemContainer, item, createItem);
                 else
@@ -188,21 +173,12 @@
         settings.targetContent.itemPicker({
             selection: 'single',
             loadContent: settings.loadDefaultSelection,
-            setContent: function ($picker, content, itemFactory, createItem) {
-                var $container = $picker;
-                $container.empty();
-
-                for (var i = 0; i < content.length; i++) {
-                    var item = content[i];
-
-                    var $icons = createIconsForSelectedItem(settings);
-
-                    var $itemContainer = $('<div class="itemPicker-item"></div>')
-                        .appendTo($container)
-                        .data('item', item)
-                        .append($icons);
-                    itemFactory($itemContainer, item, createItem);
-                }
+            itemFactory: function ($itemContainer, item, createItem) {
+                $itemContainer.append(createIconsForSelectedItem(settings));
+                if (settings.itemFactory)
+                    settings.itemFactory($itemContainer, item, createItem);
+                else
+                    createItem($itemContainer, item);
             }
         }).sortable({
             receive: function (ev, ui) {
