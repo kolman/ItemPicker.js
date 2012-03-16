@@ -3,6 +3,7 @@
         source: null,
         target: null,
         loadContent: function ($picker, callback) { },
+        loadDefaultSelection: function ($picker, callback) { return callback([]); },
         itemFactory: null
     };
 
@@ -141,15 +142,7 @@
                 for (var i = 0; i < content.length; i++) {
                     var item = content[i];
 
-                    var $icons = $('<div class="filePicker-item-icons"></div>');
-                    var $icon = $('<div></div>')
-                        .attr('class', 'filePicker-icon-add')
-                        .click(function () {
-                            var $item = cloneItem($(this).closest('.itemPicker-item'), settings);
-                            settings.targetContent.append($item);
-                            onTargetUpdated(settings);
-                        });
-                    $icons.append($icon);
+                    var $icons = createIconsForSourceItem(settings);
 
                     var $itemContainer = $('<div class="itemPicker-item"></div>')
                         .appendTo($container)
@@ -194,8 +187,22 @@
 
         settings.targetContent.itemPicker({
             selection: 'single',
-            loadContent: function ($picker, callback) {
-                callback([]);
+            loadContent: settings.loadDefaultSelection,
+            setContent: function ($picker, content, itemFactory, createItem) {
+                var $container = $picker;
+                $container.empty();
+
+                for (var i = 0; i < content.length; i++) {
+                    var item = content[i];
+
+                    var $icons = createIconsForSelectedItem(settings);
+
+                    var $itemContainer = $('<div class="itemPicker-item"></div>')
+                        .appendTo($container)
+                        .data('item', item)
+                        .append($icons);
+                    itemFactory($itemContainer, item, createItem);
+                }
             }
         }).sortable({
             receive: function (ev, ui) {
@@ -204,8 +211,7 @@
                 $item.data('item', data);
 
                 $item.find('.filePicker-item-icons').remove();
-                var $icons = $('<div class="filePicker-item-icons"></div>');
-                createIconsForSelectedItem($icons, settings);
+                var $icons = createIconsForSelectedItem(settings);
                 $item.append($icons);
             },
             update: function () {
@@ -230,8 +236,7 @@
 
         $cloned.find('.filePicker-item-icons').remove();
 
-        var $icons = $('<div class="filePicker-item-icons"></div>');
-        createIconsForSelectedItem($icons, settings);
+        var $icons = createIconsForSelectedItem(settings);
 
         $cloned.append($icons);
 
@@ -254,52 +259,40 @@
         return height;
     }
 
-    function createIconsForSelectedItem($container, settings) {
-        var $iconMoveUp = $('<div></div>')
-            .attr('class', 'filePicker-icon-moveUp')
-            .click(function () {
-                var $item = $(this).closest('.itemPicker-item');
-                $item.prev().before($item);
+    function createIconsForSelectedItem(settings) {
+        var $icons = $('<div class="filePicker-item-icons"></div>');
+        function addIcon(className, onClick) {
+            appendIcon($icons, settings, className, function ($item) {
+                onClick($item);
                 onTargetUpdated(settings);
             });
+        }
+        addIcon('filePicker-icon-moveUp', function ($item) { $item.prev().before($item); });
+        addIcon('filePicker-icon-moveDown', function ($item) { $item.next().after($item); });
+        addIcon('filePicker-icon-moveToTop', function ($item) { $item.prependTo(settings.targetContent); });
+        addIcon('filePicker-icon-moveToBottom', function ($item) { $item.appendTo(settings.targetContent); });
+        addIcon('filePicker-icon-remove', function ($item) { $item.remove(); });
+        return $icons;
+    }
 
-        var $iconMoveDown = $('<div></div>')
-            .attr('class', 'filePicker-icon-moveDown')
-            .click(function () {
-                var $item = $(this).closest('.itemPicker-item');
-                $item.next().after($item);
-                onTargetUpdated(settings);
-            });
-
-        var $iconMoveToTop = $('<div></div>')
-            .attr('class', 'filePicker-icon-moveToTop')
-            .click(function () {
-                var $item = $(this).closest('.itemPicker-item');
-                $item.prependTo(settings.targetContent);
-                onTargetUpdated(settings);
-            });
-
-        var $iconMoveToBottom = $('<div></div>')
-            .attr('class', 'filePicker-icon-moveToBottom')
-            .click(function () {
-                var $item = $(this).closest('.itemPicker-item');
-                $item.appendTo(settings.targetContent);
-                onTargetUpdated(settings);
-            });
-
-        var $iconRemove = $('<div></div>')
-        .attr('class', 'filePicker-icon-remove')
-        .click(function () {
-            $(this).closest('.itemPicker-item').remove();
+    function createIconsForSourceItem(settings) {
+        var $icons = $('<div class="filePicker-item-icons"></div>');
+        appendIcon($icons, settings, 'filePicker-icon-add', function ($item) {
+            var $clonedItem = cloneItem($item, settings);
+            settings.targetContent.append($clonedItem);
             onTargetUpdated(settings);
         });
-
-        $container.append($iconMoveUp);
-        $container.append($iconMoveDown);
-        $container.append($iconMoveToTop);
-        $container.append($iconMoveToBottom);
-        $container.append($iconRemove);
-
-        return $container;
+        return $icons;
     }
+
+    function appendIcon($container, settings, className, onClick) {
+        var $icon = $('<div></div>')
+            .attr('class', className)
+            .click(function () {
+                var $item = $(this).closest('.itemPicker-item');
+                onClick($item, settings);
+            });
+        $container.append($icon);
+    }
+
 })(jQuery);
